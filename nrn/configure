@@ -11483,6 +11483,10 @@ _lt_linker_boilerplate=`cat conftest.err`
 $RM -r conftest*
 
 
+## CAVEAT EMPTOR:
+## There is no encapsulation within the following macros, do not change
+## the running order or otherwise move them around unless you know exactly
+## what you are doing...
 if test -n "$compiler"; then
 
 lt_prog_compiler_no_builtin_flag=
@@ -19117,7 +19121,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 19120 "configure" */
+/* #line 19124 "configure" */
 public class Test {
 }
 EOF
@@ -19289,7 +19293,7 @@ EOF
 if uudecode$EXEEXT Test.uue; then
         ac_cv_prog_uudecode_base64=yes
 else
-        echo "configure: 19292: uudecode had trouble decoding base 64 file 'Test.uue'" >&5
+        echo "configure: 19296: uudecode had trouble decoding base 64 file 'Test.uue'" >&5
         echo "configure: failed file was:" >&5
         cat Test.uue >&5
         ac_cv_prog_uudecode_base64=no
@@ -19407,7 +19411,7 @@ else
 JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 cat << \EOF > $JAVA_TEST
-/* #line 19410 "configure" */
+/* #line 19414 "configure" */
 public class Test {
 }
 EOF
@@ -19442,7 +19446,7 @@ JAVA_TEST=Test.java
 CLASS_TEST=Test.class
 TEST=Test
 cat << \EOF > $JAVA_TEST
-/* [#]line 19445 "configure" */
+/* [#]line 19449 "configure" */
 public class Test {
 public static void main (String args[]) {
         System.exit (0);
@@ -22532,9 +22536,9 @@ if test "${with_iv+set}" = set; then :
 				if test -d $xprefix/iv ; then
 			IV_DIR=$xprefix/iv
 			IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
-			if test ! -d $IV_LIBDIR ; then
-				IV_LIBDIR="$IV_DIR"/lib
-			fi
+                        if test ! -d $IV_LIBDIR ; then
+                            IV_LIBDIR="$IV_DIR"/lib
+                        fi
 			IV_LIBS="-L$IV_LIBDIR -lIVhines $X_LIBS"
 			IV_LIBS_LIBTOOL="$IV_LIBDIR/libIVhines.la"
 			IV_INCLUDE=-I$IV_DIR/include
@@ -22564,14 +22568,13 @@ if test "${with_iv+set}" = set; then :
 	  IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib64
 	  if test ! -d $IV_LIBDIR ; then
               IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
-          fi
-	  if test ! -d $IV_LIBDIR ; then
-              IV_LIBDIR="$IV_DIR"/lib
+              if test ! -d $IV_LIBDIR ; then
+		  IV_LIBDIR="$IV_DIR"/lib
+              fi
 	  fi
 	  IV_LIBS="-L$IV_LIBDIR -lIVhines $X_LIBS"
 	  IV_LIBS_LIBTOOL="$IV_LIBDIR/libIVhines.la"
 	  IV_INCLUDE=-I$IV_DIR/include
-          echo "IV_INCLUDE $IV_INCLUDE"
 	fi
 
 	if test "$enable_carbon" = "yes" ; then

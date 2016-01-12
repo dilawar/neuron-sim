@@ -82,13 +82,10 @@ AC_HELP_STRING([--without-iv],[Do not compile graphics into neuron.])
 		dnl check in prefix/../iv
 		if test -d $xprefix/iv ; then
 			IV_DIR=$xprefix/iv
-			IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib64
-			if test ! -d $IV_LIBDIR ; then
-                            IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
+			IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
+                        if test ! -d $IV_LIBDIR ; then
+                            IV_LIBDIR="$IV_DIR"/lib
                         fi
-			if test ! -d $IV_LIBDIR ; then
-			    IV_LIBDIR="$IV_DIR"/lib
-			fi
 			IV_LIBS="-L$IV_LIBDIR -lIVhines $X_LIBS"
 			IV_LIBS_LIBTOOL="$IV_LIBDIR/libIVhines.la"
 			IV_INCLUDE=-I$IV_DIR/include
@@ -117,9 +114,12 @@ AC_HELP_STRING([--without-iv],[Do not compile graphics into neuron.])
 		fi
 	else  # Location specified
 	  IV_DIR=$with_iv
-	  IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
+	  IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib64
 	  if test ! -d $IV_LIBDIR ; then
+              IV_LIBDIR="$IV_DIR"/"$host_cpu"/lib
+              if test ! -d $IV_LIBDIR ; then
 		  IV_LIBDIR="$IV_DIR"/lib
+              fi
 	  fi
 	  IV_LIBS="-L$IV_LIBDIR -lIVhines $X_LIBS"
 	  IV_LIBS_LIBTOOL="$IV_LIBDIR/libIVhines.la"
