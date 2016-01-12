@@ -11,9 +11,9 @@ SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
 SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 add_custom_target(iv  ALL
-    DEPENDS ${IV_SOURCE_DIR}/libiv.a
+    DEPENDS ${IV_SOURCE_DIR}/include/ivversion.h
     )
-add_custom_command(OUTPUT ${IV_SOURCE_DIR}/libiv.a
+add_custom_command(OUTPUT ${IV_SOURCE_DIR}/include/ivversion.h
     COMMAND ./build.sh
     COMMAND ./configure  --prefix ${IV_INSTALL_DIR}
     COMMAND $(MAKE) 
@@ -26,9 +26,9 @@ SET(NRN_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrn)
 FILE(MAKE_DIRECTORY ${NRN_INSTALL_DIR})
 SET(NRN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn)
 add_custom_target(nrn  ALL
-    DEPENDS ${NRN_SOURCE_DIR}/libnrn.a
+    DEPENDS ${NRN_SOURCE_DIR}/x86_64/bin/nrngui
     )
-add_custom_command(OUTPUT ${NRN_SOURCE_DIR}/libnrn.a
+add_custom_command(OUTPUT ${NRN_SOURCE_DIR}/x86_64/bin/nrngui
     COMMAND ./build.sh
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR}
     COMMAND $(MAKE) 
@@ -38,3 +38,10 @@ add_custom_command(OUTPUT ${NRN_SOURCE_DIR}/libnrn.a
     )
 
 add_dependencies(nrn iv)
+
+# install
+install(DIRECTORY ${NRN_INSTALL_DIR}/
+    DESTINATION ${CMAKE_INSTALL_PREFIX}
+    USE_SOURCE_PERMISSIONS
+    )
+
