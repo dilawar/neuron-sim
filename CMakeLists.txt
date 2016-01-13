@@ -41,6 +41,7 @@ add_custom_target(nrn  ALL
     )
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh
+    COMMAND ./hg2nrnversion_h.sh > ${NRN_SOURCE_DIR}/src/nrnoc/nrnversion.h
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR}
         --with-x --with-nrnpython=dynamic
     COMMAND $(MAKE) 
