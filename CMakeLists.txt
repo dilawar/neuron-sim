@@ -32,7 +32,7 @@ add_custom_target(nrn  ALL
     )
 
 SET(ENV{LDFLAGS} "-L ${NRN_INSTALL_DIR}/x86_64/lib64")
-add_custom_command(OUTPUT ${NRN_SOURCE_DIR}/x86_64/bin/nrngui
+add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/x86_64/bin/nrngui
     COMMAND ./build.sh
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR} --with-nrnpython 
     COMMAND $(MAKE) 
