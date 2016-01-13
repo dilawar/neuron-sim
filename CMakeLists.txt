@@ -9,17 +9,17 @@ else()
     unset(LDPREFIX)
 endif()
 
-if(LDPREFIX)
-    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/${LDPREFIX}/lib64")
-else()
-    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/lib")
-endif()
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NRN_LD_FLAGS}")
+#if(LDPREFIX)
+    #SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/${LDPREFIX}/lib64")
+#else()
+    #SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/lib")
+#endif()
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NRN_LD_FLAGS}")
 
 SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
-SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 
+SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 add_custom_target(iv  ALL
     DEPENDS ${IV_INSTALL_DIR}/include/ivversion.h
     )
@@ -41,7 +41,8 @@ add_custom_target(nrn  ALL
     )
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh
-    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR} --with-nrnpython 
+    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR}
+        --with-x --with-nrnpython=dynamic
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${NRN_SOURCE_DIR}

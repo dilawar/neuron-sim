@@ -1,7 +1,7 @@
 #!/bin/sh
 # extract major minor and commit version number from src/nrnoc/nrnversion.h
 if test "$NSRC" = "" ; then
-	NSRC=$HOME/neuron/nrn
+	NSRC=`pwd`
 fi
 
 if test -f $NSRC/src/nrnoc/nrnversion.h ; then
