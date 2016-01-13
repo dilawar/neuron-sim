@@ -1,6 +1,13 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 PROJECT(neuron)
 
+if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
+    MESSAGE("++ 64 bit architecture") 
+    set(LDPREFIX "x86_64") 
+else() 
+    MESSAGE("++ 32 bit architecture") 
+    set(LDPREFIX "") 
+endif()
 
 INCLUDE_DIRECTORIES(
     ${CMAKE_CURRENT_SOURCE_DIR}/nrn
@@ -31,7 +38,12 @@ add_custom_target(nrn  ALL
     DEPENDS ${NRN_INSTALL_DIR}/x86_64/bin/nrngui
     )
 
-SET(ENV{LDFLAGS} "-L ${NRN_INSTALL_DIR}/x86_64/lib64")
+if(LDPREFIX)
+    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/${LDPREFIX}/lib64")
+else()
+    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/lib")
+endif()
+
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/x86_64/bin/nrngui
     COMMAND ./build.sh
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR} --with-nrnpython 
