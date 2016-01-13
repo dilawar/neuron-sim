@@ -507,7 +507,8 @@ AC_SUBST(modsubdir)
 AC_DEFINE_UNQUOTED(NRNHOSTCPU,"$host_cpu",[cpu type consistent with nrnivmodl])
 if test "$host_cpu" = "x86_64" ; then 
     echo "host A : $host_cpu"
-    NRN_LIBDIR=$exec_prefix/lib64
+    #NRN_LIBDIR=$exec_prefix/lib64
+    NRN_LIBDIR="$exec_prefix/lib64 -L$exec_prefix/lib"
 else
     echo "host B: $host_cpu"
     NRN_LIBDIR=$exec_prefix/lib
