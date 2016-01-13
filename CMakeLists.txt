@@ -39,10 +39,10 @@ SET(NRN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn)
 add_custom_target(nrn  ALL
     DEPENDS ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     )
+
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh 
-    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix
-        ${NRN_INSTALL_DIR} --with-x 
+    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --with-nrnpython --prefix ${NRN_INSTALL_DIR} --with-x 
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${NRN_SOURCE_DIR}
@@ -70,5 +70,5 @@ install(CODE
         ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR}etup.py install --prefix ${CMAKE_INSTALL_PREFIX}
         WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
         )"
-        COMPONENT neuron
-        )
+    COMPONENT neuron
+    )
