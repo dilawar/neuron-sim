@@ -74,7 +74,7 @@ hoc_module = Extension(
       "neuron.hoc",
       ["inithoc.cpp"],
       library_dirs=libdirs,
-      setup_extra_link_args = [ epre+libdirs[0],epre+libdirs[1] ],
+      extra_link_args = [ epre+libdirs[0],epre+libdirs[1] ],
       #extra_objects = [],
       libraries = [
 	"nrnpython@npy_apiver@",
