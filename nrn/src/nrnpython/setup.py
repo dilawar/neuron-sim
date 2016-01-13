@@ -63,19 +63,19 @@ if nrnpython_pyver!=get_python_version():
 include_dirs = [nrn_srcdir+'/src/oc', '../oc', nrn_srcdir+'/src/nrnmpi']
 defines = []
 
-libdirs = [
-        destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib64 -L/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib",
-        ivlibdir
-        ]
-
+libdirs = [destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib64 -L/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib",
+  ivlibdir
+]
 # epre='-Wl,-R'
+
+
 
 hoc_module = Extension(
       "neuron.hoc",
       ["inithoc.cpp"],
       library_dirs=libdirs,
       # extra_link_args = [ epre+libdirs[0],epre+libdirs[1] ],
-      # extra_objects = [],
+      #extra_objects = [],
       libraries = [
 	"nrnpython",
         "nrnoc", "oc", "nrniv", "ivoc",
