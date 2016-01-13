@@ -50,7 +50,20 @@ add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     VERBATIM
     )
 
+SET(NRNPYTHON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/nrnpython)
+add_custom_target(nrnpython ALL
+    DEPENDS ${NRNPYTHON_DIR}/hoc.so
+    )
+SET(NRNPYTHON_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrnpython)
+FILE(MAKE_DIRECTORY ${NRNPYTHON_BUILD_DIR})
+add_custom_command(OUTPUT ${NRNPYTHON_DIR}/hoc.so
+    COMMAND ${CMAKE_COMMAND} ${NRNPYTHON_DIR}
+    COMMAND $(MAKE)
+    WORKING_DIRECTORY ${NRNPYTHON_BUILD_DIR}
+    )
+
 add_dependencies(nrn iv)
+add_dependencies(nrnpython nrn)
 
 FIND_PACKAGE(PythonInterp REQUIRED)
 
@@ -74,3 +87,4 @@ install(CODE
         )"
     COMPONENT neuron
     )
+

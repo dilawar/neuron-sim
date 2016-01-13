@@ -11,7 +11,7 @@ nrnpython_exec = "/usr/bin/python"
 nrnpython_pyver = "2.7"
 nrn_srcdir = "."
 build_rx3d = 1
-ivlibdir = "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_iv/x86_64/lib64"
+ivlibdir = "/home/dilawars/Work/GITHUB/Packages/neuron-sim/_iv/x86_64/lib"
 if ivlibdir == "" :
     ivlibdir = '.'
 
@@ -19,7 +19,7 @@ destdir = os.getenv("DESTDIR")
 if not destdir:
   destdir = ""
 
-instdir = destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn"
+instdir = destdir + "/home/dilawars/Work/GITHUB/Packages/neuron-sim/_nrn"
 if nrn_srcdir[0] != '/' :
     nrn_srcdir = '../../' + nrn_srcdir
 
@@ -63,7 +63,7 @@ if nrnpython_pyver!=get_python_version():
 include_dirs = [nrn_srcdir+'/src/oc', '../oc', nrn_srcdir+'/src/nrnmpi']
 defines = []
 
-libdirs = [destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib64 -L/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib",
+libdirs = [destdir + "/home/dilawars/Work/GITHUB/Packages/neuron-sim/_nrn/x86_64/lib64 -L/home/dilawars/Work/GITHUB/Packages/neuron-sim/_nrn/x86_64/lib",
   ivlibdir
 ]
 # epre='-Wl,-R'
@@ -94,7 +94,7 @@ hoc_module = Extension(
 # from http://stackoverflow.com/questions/1612733/including-non-python-files-with-setup-py
 from distutils.command.install import INSTALL_SCHEMES
 for scheme in INSTALL_SCHEMES.values():
-    scheme['data'] = scheme['purelib']
+    scheme['data'] = scheme['purelib']\
 
 ext_modules = [hoc_module]
 if build_rx3d:
