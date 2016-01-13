@@ -6,12 +6,12 @@ import sys
 import os
 
 # NRNPYTHON_DEFINES which were enabled at configure time
-extern_defines = "@NRNPYTHON_DEFINES@"
-nrnpython_exec = "@NRNPYTHON_EXEC@"
-nrnpython_pyver = "@NRNPYTHON_PYVER@"
-nrn_srcdir = "@NRN_SRCDIR@"
-build_rx3d = @BUILD_RX3D@
-ivlibdir = "@IV_LIBDIR@"
+extern_defines = ""
+nrnpython_exec = "/usr/bin/python"
+nrnpython_pyver = "2.7"
+nrn_srcdir = "."
+build_rx3d = 1
+ivlibdir = "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_iv/x86_64/lib64"
 if ivlibdir == "" :
     ivlibdir = '.'
 
@@ -19,7 +19,7 @@ destdir = os.getenv("DESTDIR")
 if not destdir:
   destdir = ""
 
-instdir = destdir + "@prefix@"
+instdir = destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn"
 if nrn_srcdir[0] != '/' :
     nrn_srcdir = '../../' + nrn_srcdir
 
@@ -33,8 +33,8 @@ if nrnpython_pyver!=get_python_version():
 ## ldefs = extern_defines.split('-D')
 ##
 ### if using MPI then at least for linking need special paths and libraries
-##mpicc_bin = "@CC@"
-##mpicxx_bin = "@CXX@"
+##mpicc_bin = "gcc"
+##mpicxx_bin = "g++"
 ##import os
 ##os.environ["CC"]=mpicc_bin
 ##os.environ["CXX"]=mpicxx_bin
@@ -63,7 +63,7 @@ if nrnpython_pyver!=get_python_version():
 include_dirs = [nrn_srcdir+'/src/oc', '../oc', nrn_srcdir+'/src/nrnmpi']
 defines = []
 
-libdirs = [destdir + "@NRN_LIBDIR@",
+libdirs = [destdir + "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib64 -L/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_nrn/x86_64/lib",
   ivlibdir
 ]
 # epre='-Wl,-R'
@@ -77,14 +77,14 @@ hoc_module = Extension(
       # extra_link_args = [ epre+libdirs[0],epre+libdirs[1] ],
       #extra_objects = [],
       libraries = [
-	"nrnpython@npy_apiver@",
+	"nrnpython",
         "nrnoc", "oc", "nrniv", "ivoc",
-        @BUILD_MEMACS_TRUE@"memacs",
+        "memacs",
 	"meschach", "neuron_gnu",
-	@BUILD_NRNMPI_DYNAMIC_FALSE@"nrnmpi",
+	"nrnmpi",
         "scopmath", "sparse13", "sundials",
 	"readline",
-	"@IVHINES@",
+	"IVhines",
       ],
       include_dirs = include_dirs,
       define_macros=defines
@@ -121,7 +121,7 @@ packages=['neuron','neuron.neuroml','neuron.tests', 'neuron.rxd']
 if build_rx3d:
   packages +=['neuron.rxd.geometry3d']
 
-setup(name="NEURON", version="@PACKAGE_VERSION@",
+setup(name="NEURON", version="7.4",
       description = "NEURON bindings for python",
       package_dir = {'':instdir+'/share/nrn/lib/python'},
       packages=packages,
