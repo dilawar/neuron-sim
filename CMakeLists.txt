@@ -26,7 +26,7 @@ add_custom_target(iv  ALL
 
 add_custom_command(OUTPUT ${IV_INSTALL_DIR}/include/ivversion.h
     COMMAND ./build.sh
-    COMMAND ./configure  --prefix ${IV_INSTALL_DIR}
+    COMMAND ./configure  --prefix ${IV_INSTALL_DIR} --disable-rpath
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${IV_SOURCE_DIR}
@@ -42,7 +42,7 @@ add_custom_target(nrn  ALL
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh 
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix
-        ${NRN_INSTALL_DIR} --with-x --with-nrnpython
+        ${NRN_INSTALL_DIR} --with-x --with-nrnpython --disable-rpath
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${NRN_SOURCE_DIR}
