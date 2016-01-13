@@ -18,6 +18,7 @@ endif()
 
 SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
+LINK_DIRECTORIES( ${IV_INSTALL_DIR}/${LDPREFIX}/lib )
 
 SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 add_custom_target(iv  ALL
@@ -34,6 +35,7 @@ add_custom_command(OUTPUT ${IV_INSTALL_DIR}/include/ivversion.h
     )
 
 SET(NRN_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrn)
+LINK_DIRECTORIES( ${NRN_INSTALL_DIR}/${LDPREFIX}/lib )
 
 FILE(MAKE_DIRECTORY ${NRN_INSTALL_DIR})
 SET(NRN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn)
@@ -71,7 +73,7 @@ add_library(surfaces MODULE ${EXTERNAL_SRC_DIR}/surfaces.cpp
 
 target_link_libraries(hoc 
     nrnpython
-    nrnhoc
+    nrnoc
     oc
     nrniv
     ivoc
@@ -81,7 +83,7 @@ target_link_libraries(hoc
     nrnmpi
     scopmath
     sparse13
-    sundails
+    sundials
     readline
     IVhines
     )
