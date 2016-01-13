@@ -75,7 +75,7 @@ hoc_module = Extension(
       ["inithoc.cpp"],
       library_dirs=libdirs,
       # extra_link_args = [ epre+libdirs[0],epre+libdirs[1] ],
-      #extra_objects = [],
+      #extra_objectks = [],
       libraries = [
 	"nrnpython",
         "nrnoc", "oc", "nrniv", "ivoc",

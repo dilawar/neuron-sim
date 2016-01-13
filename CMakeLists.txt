@@ -63,12 +63,32 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/oc/
 
 SET(EXTERNAL_SRC_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/nrn/share/lib/python/neuron/rxd/geometry3d)
+
 add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
-add_library(graphicsPrimitive MODULE ${EXTERNAL_SRC_DIR}/graphicsPrimitives.cpp)
+set_target_properties(hoc
+    PROPERTIES PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron
+    )
+
+add_library(graphicsPrimitives MODULE ${EXTERNAL_SRC_DIR}/graphicsPrimitives.cpp)
+set_target_properties(graphicsPrimitives
+    PROPERTIES PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d
+    )
+
 add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.cpp)
+set_target_properties(ctng 
+    PROPERTIES PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
+    )
+
 add_library(surfaces MODULE ${EXTERNAL_SRC_DIR}/surfaces.cpp
     ${EXTERNAL_SRC_DIR}/marching_cubes2.c 
     ${EXTERNAL_SRC_DIR}/llgramarea.c
+    )
+set_target_properties(surfaces
+    PROPERTIES PREFIX ""
+    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
     )
 
 target_link_libraries(hoc 
