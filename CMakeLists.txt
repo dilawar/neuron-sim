@@ -6,23 +6,25 @@ if("${CMAKE_SIZEOF_VOID_P}" EQUAL "8")
     set(LDPREFIX "x86_64") 
 else() 
     MESSAGE("++ 32 bit architecture") 
-    set(LDPREFIX "") 
+    unset(LDPREFIX)
 endif()
 
-INCLUDE_DIRECTORIES(
-    ${CMAKE_CURRENT_SOURCE_DIR}/nrn
-    ${CMAKE_CURRENT_SOURCE_DIR}/iv
-)
+if(LDPREFIX)
+    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/${LDPREFIX}/lib64")
+else()
+    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/lib")
+endif()
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NRN_LD_FLAGS}")
 
 SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
 SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 
 add_custom_target(iv  ALL
-    DEPENDS ${IV_SOURCE_DIR}/include/ivversion.h
+    DEPENDS ${IV_INSTALL_DIR}/include/ivversion.h
     )
 
-add_custom_command(OUTPUT ${IV_SOURCE_DIR}/include/ivversion.h
+add_custom_command(OUTPUT ${IV_INSTALL_DIR}/include/ivversion.h
     COMMAND ./build.sh
     COMMAND ./configure  --prefix ${IV_INSTALL_DIR}
     COMMAND $(MAKE) 
@@ -35,16 +37,9 @@ SET(NRN_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrn)
 FILE(MAKE_DIRECTORY ${NRN_INSTALL_DIR})
 SET(NRN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn)
 add_custom_target(nrn  ALL
-    DEPENDS ${NRN_INSTALL_DIR}/x86_64/bin/nrngui
+    DEPENDS ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     )
-
-if(LDPREFIX)
-    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/${LDPREFIX}/lib64")
-else()
-    SET(NRN_LD_FLAGS "-L${NRN_INSTALL_DIR}/lib")
-endif()
-
-add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/x86_64/bin/nrngui
+add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR} --with-nrnpython 
     COMMAND $(MAKE) 

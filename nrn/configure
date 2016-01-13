@@ -22725,7 +22725,13 @@ cat >>confdefs.h <<_ACEOF
 #define NRNHOSTCPU "$host_cpu"
 _ACEOF
 
-NRN_LIBDIR=$exec_prefix/lib
+if test "$host_cpu" = "x86_64" ; then
+    echo "host A : $host_cpu"
+    NRN_LIBDIR=$exec_prefix/lib64
+else
+    echo "host B: $host_cpu"
+    NRN_LIBDIR=$exec_prefix/lib
+fi
 
 
 
