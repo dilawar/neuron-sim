@@ -26,7 +26,7 @@ add_custom_target(iv  ALL
 
 add_custom_command(OUTPUT ${IV_INSTALL_DIR}/include/ivversion.h
     COMMAND ./build.sh
-    COMMAND ./configure  --prefix ${IV_INSTALL_DIR} --disable-rpath
+    COMMAND ./configure  --prefix ${IV_INSTALL_DIR}
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${IV_SOURCE_DIR}
@@ -42,7 +42,7 @@ add_custom_target(nrn  ALL
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh 
     COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix
-        ${NRN_INSTALL_DIR} --with-x --with-nrnpython --disable-rpath
+        ${NRN_INSTALL_DIR} --with-x 
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${NRN_SOURCE_DIR}
@@ -52,8 +52,13 @@ add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
 add_dependencies(nrn iv)
 
 FIND_PACKAGE(PythonInterp REQUIRED)
+
 # install
 install(DIRECTORY ${NRN_INSTALL_DIR}/
+    DESTINATION ${CMAKE_INSTALL_PREFIX}
+    USE_SOURCE_PERMISSIONS
+    )
+install(DIRECTORY ${IV_INSTALL_DIR}}/
     DESTINATION ${CMAKE_INSTALL_PREFIX}
     USE_SOURCE_PERMISSIONS
     )
@@ -62,7 +67,7 @@ install(CODE
     "
     EXECUTE_PROCESS(
         COMMAND
-        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
+        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR}etup.py install --prefix ${CMAKE_INSTALL_PREFIX}
         WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
         )"
         COMPONENT neuron
