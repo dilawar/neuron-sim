@@ -94,7 +94,7 @@ hoc_module = Extension(
 # from http://stackoverflow.com/questions/1612733/including-non-python-files-with-setup-py
 from distutils.command.install import INSTALL_SCHEMES
 for scheme in INSTALL_SCHEMES.values():
-    scheme['data'] = scheme['purelib']\
+    scheme['data'] = scheme['purelib']
 
 ext_modules = [hoc_module]
 if build_rx3d:

@@ -34,6 +34,7 @@ add_custom_command(OUTPUT ${IV_INSTALL_DIR}/include/ivversion.h
     )
 
 SET(NRN_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrn)
+
 FILE(MAKE_DIRECTORY ${NRN_INSTALL_DIR})
 SET(NRN_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn)
 add_custom_target(nrn  ALL
@@ -50,20 +51,42 @@ add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     VERBATIM
     )
 
+FIND_PACKAGE(PythonLibs REQUIRED)
 SET(NRNPYTHON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/nrnpython)
-add_custom_target(nrnpython ALL
-    DEPENDS ${NRNPYTHON_DIR}/hoc.so
-    )
-SET(NRNPYTHON_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/_nrnpython)
-FILE(MAKE_DIRECTORY ${NRNPYTHON_BUILD_DIR})
-add_custom_command(OUTPUT ${NRNPYTHON_DIR}/hoc.so
-    COMMAND ${CMAKE_COMMAND} ${NRNPYTHON_DIR}
-    COMMAND $(MAKE)
-    WORKING_DIRECTORY ${NRNPYTHON_BUILD_DIR}
+include_directories(${PYTHON_INCLUDE_DIRS})
+
+include_directories( ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/oc/
+    ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/nrnmpi
     )
 
+SET(EXTERNAL_SRC_DIR
+    ${CMAKE_CURRENT_SOURCE_DIR}/nrn/share/lib/python/neuron/rxd/geometry3d)
+add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
+add_library(graphicsPrimitive MODULE ${EXTERNAL_SRC_DIR}/graphicsPrimitives.cpp)
+add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.cpp)
+add_library(surfaces MODULE ${EXTERNAL_SRC_DIR}/surfaces.cpp
+    ${EXTERNAL_SRC_DIR}/marching_cubes2.c 
+    ${EXTERNAL_SRC_DIR}/llgramarea.c
+    )
+
+target_link_libraries(hoc 
+    nrnpython
+    nrnhoc
+    oc
+    nrniv
+    ivoc
+    memacs
+    meschach
+    neuron_gnu
+    nrnmpi
+    scopmath
+    sparse13
+    sundails
+    readline
+    IVhines
+    )
 add_dependencies(nrn iv)
-add_dependencies(nrnpython nrn)
+add_dependencies(hoc nrn)
 
 FIND_PACKAGE(PythonInterp REQUIRED)
 
@@ -78,13 +101,13 @@ install(DIRECTORY ${IV_INSTALL_DIR}/
     USE_SOURCE_PERMISSIONS
     )
 
-install(CODE
-    "
-    EXECUTE_PROCESS(
-        COMMAND
-        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
-        WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
-        )"
-    COMPONENT neuron
-    )
-
+#install(CODE
+#    "
+#    EXECUTE_PROCESS(
+#        COMMAND
+#        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
+#        WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
+#        )"
+#    COMPONENT neuron
+#    )
+#
