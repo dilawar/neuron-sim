@@ -108,72 +108,72 @@ add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     VERBATIM
     )
 
-add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
+#add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
+#
+#configure_file( ${NRNPYTHON_DIR}/setup_cmake.py.in
+#    ${NRNPYTHON_DIR}/setup_cmake.py
+#    )
+#
+#configure_file( ${NRN_SOURCE_DIR}/src/oc/nrnmpiuse.h.in
+#    ${NRN_SOURCE_DIR}/src/oc/nrnmpiuse.h
+#    )
+#configure_file( ${NRN_SOURCE_DIR}/src/oc/nrnpthread.h.in
+#    ${NRN_SOURCE_DIR}/src/oc/nrnpthread.h
+#    )
+#
+### Build
+#set_target_properties(hoc
+#    PROPERTIES PREFIX ""
+#    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron
+#    )
+#
+#add_library(graphicsPrimitives MODULE
+#    ${EXTERNAL_SRC_DIR}/graphicsPrimitives.pyx.cpp
+#    )
+#
+#set_target_properties(graphicsPrimitives
+#    PROPERTIES PREFIX ""
+#    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d
+#    )
+#
+#add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.pyx.cpp
+#    )
+#set_target_properties(ctng 
+#    PROPERTIES PREFIX ""
+#    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
+#    )
+#add_library(surfaces MODULE ${EXTERNAL_SRC_DIR}/surfaces.pyx.cpp
+#    ${EXTERNAL_SRC_DIR}/marching_cubes2.c 
+#    ${EXTERNAL_SRC_DIR}/llgramarea.c
+#    )
+#set_target_properties(surfaces
+#    PROPERTIES PREFIX ""
+#    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
+#    )
+#
 
-configure_file( ${NRNPYTHON_DIR}/setup_cmake.py.in
-    ${NRNPYTHON_DIR}/setup_cmake.py
-    )
-
-configure_file( ${NRN_SOURCE_DIR}/src/oc/nrnmpiuse.h.in
-    ${NRN_SOURCE_DIR}/src/oc/nrnmpiuse.h
-    )
-configure_file( ${NRN_SOURCE_DIR}/src/oc/nrnpthread.h.in
-    ${NRN_SOURCE_DIR}/src/oc/nrnpthread.h
-    )
-
-## Build
-
-set_target_properties(hoc
-    PROPERTIES PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron
-    )
-
-add_library(graphicsPrimitives MODULE
-    ${EXTERNAL_SRC_DIR}/graphicsPrimitives.pyx.cpp
-    )
-
-set_target_properties(graphicsPrimitives
-    PROPERTIES PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d
-    )
-
-add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.pyx.cpp
-    )
-set_target_properties(ctng 
-    PROPERTIES PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
-    )
-add_library(surfaces MODULE ${EXTERNAL_SRC_DIR}/surfaces.pyx.cpp
-    ${EXTERNAL_SRC_DIR}/marching_cubes2.c 
-    ${EXTERNAL_SRC_DIR}/llgramarea.c
-    )
-set_target_properties(surfaces
-    PROPERTIES PREFIX ""
-    LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
-    )
-
-target_link_libraries(hoc 
-    nrnoc
-    oc
-    nrniv
-    ivoc
-    memacs
-    meschach
-    neuron_gnu
-    nrnmpi
-    scopmath
-    sparse13
-    sundials
-    readline
-    IVhines
-    nrnpython
-    )
-
+#target_link_libraries(hoc 
+#    nrnoc
+#    oc
+#    nrniv
+#    ivoc
+#    memacs
+#    meschach
+#    neuron_gnu
+#    nrnmpi
+#    scopmath
+#    sparse13
+#    sundials
+#    readline
+#    IVhines
+#    nrnpython
+#    )
+#
 
 FIND_PACKAGE(PythonInterp REQUIRED)
 
 add_dependencies(nrn iv)
-add_dependencies(hoc nrn)
+#add_dependencies(hoc nrn)
 
 # install
 install(DIRECTORY ${NRN_INSTALL_DIR}/
