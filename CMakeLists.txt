@@ -153,7 +153,10 @@ install(CODE
     EXECUTE_PROCESS(
         COMMAND
         ${PYTHON_EXECUTABLE} setup_cmake.py install --prefix ${CMAKE_INSTALL_PREFIX}
+        RESULT_VARIABLE NRNPYTHON_INSTALL_RESULT
         WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
-    )"
+    )
+    MESSAGE(STATUS ${NRNPYTHON_INSTALL_RESULT})
+    "
     )
 

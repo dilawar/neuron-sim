@@ -29,7 +29,13 @@ setup(
                 'python', 'neuron', 'rxd', 'geometry3d' )
             },
         packages = packages,
-        data_files = [('neuron', [ os.path.join( data_dir, 'help_data.dat') ])]+
-            sofiles,
+        data_files = [
+            ('neuron', [ os.path.join( data_dir, 'help_data.dat'), 'neuron/hoc.so' ])
+            , ( 'neuron/rxd/geometry3d',
+                ['./neuron/rxd/geometry3d/graphicsPrimitives.so'] )
+            , ( 'neuron/rxd/geometry3d', 
+                ['./neuron/rxd/geometry3d/surfaces/ctng.so', './neuron/rxd/geometry3d/surfaces/surfaces.so']
+                )
+            ],
         )
 
