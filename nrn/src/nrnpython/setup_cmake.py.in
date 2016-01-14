@@ -1,8 +1,12 @@
 #setup.py
 from distutils.core import setup, Extension
 
+# Make sure to honour the data_files paths.
+from distutils.command.install import INSTALL_SCHEMES
+for scheme in INSTALL_SCHEMES.values():
+        scheme['data'] = scheme['purelib']
+
 import os
-import glob
 
 nrn_srcdir = "@NRN_SOURCE_DIR@"
 
@@ -12,21 +16,20 @@ packages +=['neuron.rxd.geometry3d']
 data_dir = os.path.join(nrn_srcdir, 'share', 'lib', 'python', 'neuron' )
 
 sofiles = []
-for d, ds, fs in os.walk( '.' ):
+for d, fd, fs in os.walk( '.' ):
     for f in fs:
-        ext = f.split('.')[-1]
-        if ext == 'so':
+        if 'so' == f.split('.')[-1]:
             sofiles.append( os.path.join(d, f) )
 
 setup(
         name="NEURON", version="7.4",
         description = "NEURON bindings for python",
-        package_dir = { 'neuron' : os.path.join(nrn_srcdir, 'share', 'lib',
-            'python', 'neuron' ) 
+        package_dir = { 'neuron' : os.path.join(nrn_srcdir, 'share', 'lib', 'python', 'neuron' )
+            , 'neuron.rxd.geometry3d' : os.path.join(nrn_srcdir, 'share', 'lib',
+                'python', 'neuron', 'rxd', 'geometry3d' )
             },
         packages = packages,
-        data_files = [('neuron', [ os.path.join( data_dir, 'help_data.dat') ] +
-            sofiles )
-            ],
+        data_files = [('neuron', [ os.path.join( data_dir, 'help_data.dat') ])]+
+            sofiles,
         )
 
