@@ -1,13 +1,15 @@
 #setup.py
 from distutils.core import setup, Extension
 
-import sys
 import os
+import glob
 
 nrn_srcdir = "@NRN_SOURCE_DIR@"
 
 packages=['neuron','neuron.neuroml','neuron.tests', 'neuron.rxd']
 packages +=['neuron.rxd.geometry3d']
+
+data_dir = os.path.join(nrn_srcdir, 'share', 'lib', 'python', 'neuron' )
 
 setup(
         name="NEURON", version="7.4",
@@ -16,8 +18,8 @@ setup(
             'python', 'neuron' ) 
             },
         packages = packages,
-        data_files = [('neuron', [ 
-            os.path.join(nrn_srcdir, 'share', 'lib', 'python', 'neuron', 'help_data.dat') 
-            ] )],
+        data_files = [('neuron', [ os.path.join( data_dir, 'help_data.dat') ] +
+            glob.glob( os.path.join( data_dir, '*.so' )) )  
+            ],
         )
 
