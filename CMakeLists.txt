@@ -20,6 +20,8 @@ endif()
 #SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${NRN_LD_FLAGS}")
 
 SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
+include_directories( ${IV_INSTALL_DIR}/include)
+
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
 LINK_DIRECTORIES( ${IV_INSTALL_DIR}/${LDPREFIX}/lib 
     ${IV_INSTALL_DIR}/${LDPREFIX}/lib64
@@ -74,6 +76,7 @@ SET(EXTERNAL_SRC_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/nrn/share/lib/python/neuron/rxd/geometry3d
     )
 add_subdirectory( ${EXTERNAL_SRC_DIR} )
+add_subdirectory( ${NRN_SOURCE_DIR}/src/nrnpython )
 
 SET(NRNPYTHON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/nrnpython)
 add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
@@ -149,7 +152,7 @@ install(CODE
     "
     EXECUTE_PROCESS(
         COMMAND
-        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
+        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup_cmake.py install --prefix ${CMAKE_INSTALL_PREFIX}
         WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
     )"
     COMPONENT neuron

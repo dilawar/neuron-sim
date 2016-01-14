@@ -9,6 +9,8 @@
 
 #include <../../nrnconf.h>
 #include <nrnpython_config.h>
+#include <Python.h>
+
 #if defined(USE_PYTHON)
 #undef _POSIX_C_SOURCE
 #undef _XOPEN_SOURCE
