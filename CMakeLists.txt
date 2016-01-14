@@ -152,9 +152,8 @@ install(CODE
     "
     EXECUTE_PROCESS(
         COMMAND
-        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup_cmake.py install --prefix ${CMAKE_INSTALL_PREFIX}
+        ${PYTHON_EXECUTABLE} setup_cmake.py install --prefix ${CMAKE_INSTALL_PREFIX}
         WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
     )"
-    COMPONENT neuron
     )
 
