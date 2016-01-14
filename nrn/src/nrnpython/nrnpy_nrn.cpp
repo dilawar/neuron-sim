@@ -1,11 +1,11 @@
-#include <nrnpython.h>
 #include <structmember.h>
 #include <InterViews/resource.h>
 #include <nrnoc2iv.h>
+#include "nrnpython.h"
 
 extern "C" {
 #include <membfunc.h>
-#include <parse.h>
+#include "parse.h"
 extern void nrn_area_ri(Section* sec);
 extern void sec_free(hoc_Item*);
 extern Symlist* hoc_built_in_symlist;

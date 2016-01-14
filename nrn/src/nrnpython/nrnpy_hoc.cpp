@@ -1,4 +1,3 @@
-#include <nrnpython.h>
 #include <structmember.h>
 #include <InterViews/resource.h>
 #include <nrnoc2iv.h>
@@ -6,11 +5,13 @@
 #include "ivocvect.h"
 #include "oclist.h"
 #include "nrniv_mf.h"
+#include "nrnpy_reg.h"
+#include "nrnpython.h"
 
 
 extern "C" {
 
-#include "parse.h"
+#include <parse.h>
 extern Section* nrn_noerr_access();
 extern void hoc_pushs(Symbol*);
 extern double* hoc_evalpointer();

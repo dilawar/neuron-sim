@@ -7,7 +7,6 @@
 #define MS_WINDOWS
 #endif
 
-#include <../../nrnconf.h>
 #include <nrnpython_config.h>
 #include <Python.h>
 
@@ -30,6 +29,7 @@
 #endif /* PY_MAJOR_VERSION */
 
 #endif /*USE_PYTHON*/
+
 
 #if (PY_MAJOR_VERSION >= 3)
 #define PyString_Check PyUnicode_Check
