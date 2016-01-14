@@ -11,6 +11,13 @@ packages +=['neuron.rxd.geometry3d']
 
 data_dir = os.path.join(nrn_srcdir, 'share', 'lib', 'python', 'neuron' )
 
+sofiles = []
+for d, ds, fs in os.walk( '.' ):
+    for f in fs:
+        ext = f.split('.')[-1]
+        if ext == 'so':
+            sofiles.append( os.path.join(d, f) )
+
 setup(
         name="NEURON", version="7.4",
         description = "NEURON bindings for python",
@@ -19,7 +26,7 @@ setup(
             },
         packages = packages,
         data_files = [('neuron', [ os.path.join( data_dir, 'help_data.dat') ] +
-            glob.glob( os.path.join( data_dir, '*.so' )) )  
+            sofiles )
             ],
         )
 
