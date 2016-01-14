@@ -90,7 +90,8 @@ set_target_properties(graphicsPrimitives
     LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d
     )
 
-add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.pyx.cpp)
+add_library(ctng MODULE ${EXTERNAL_SRC_DIR}/ctng.pyx.cpp
+    )
 set_target_properties(ctng 
     PROPERTIES PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
