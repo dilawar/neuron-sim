@@ -7,8 +7,8 @@ import os
 
 # NRNPYTHON_DEFINES which were enabled at configure time
 extern_defines = ""
-nrnpython_exec = "/usr/bin/python"
-nrnpython_pyver = "2.7"
+nrnpython_exec = ""
+nrnpython_pyver = ""
 nrn_srcdir = "."
 build_rx3d = 1
 ivlibdir = "/home1/dilawars/Work/GITHUB/PACKAGES/DILAWAR/neuron-sim/_iv/x86_64/lib64"

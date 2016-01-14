@@ -21,7 +21,9 @@ endif()
 
 SET(IV_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/_iv)
 FILE(MAKE_DIRECTORY ${IV_INSTALL_DIR})
-LINK_DIRECTORIES( ${IV_INSTALL_DIR}/${LDPREFIX}/lib )
+LINK_DIRECTORIES( ${IV_INSTALL_DIR}/${LDPREFIX}/lib 
+    ${IV_INSTALL_DIR}/${LDPREFIX}/lib64
+    )
 
 SET(IV_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/iv)
 add_custom_target(iv  ALL
@@ -50,14 +52,14 @@ add_custom_target(nrn  ALL
 
 add_custom_command(OUTPUT ${NRN_INSTALL_DIR}/${LDPREFIX}/bin/nrniv
     COMMAND ./build.sh 
-    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --with-nrnpython --prefix
-    ${NRN_INSTALL_DIR} --with-x  --disable-rpath
+    COMMAND ./configure --with-iv=${IV_INSTALL_DIR} --prefix ${NRN_INSTALL_DIR} --with-x  --disable-rpath
     COMMAND $(MAKE) 
     COMMAND make install
     WORKING_DIRECTORY ${NRN_SOURCE_DIR}
     VERBATIM
     )
 
+SET(Python_ADDITIONAL_VERSIONS 2.7 2.6 3.3)
 FIND_PACKAGE(PythonLibs REQUIRED)
 FIND_PACKAGE(NumPy REQUIRED)
 

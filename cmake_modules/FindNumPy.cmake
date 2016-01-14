@@ -38,8 +38,6 @@ if (NOT NUMPY_FOUND)
         set (NUMPY_ROOT_DIR ${CMAKE_INSTALL_PREFIX})
     endif (NOT NUMPY_ROOT_DIR)
 
-    FIND_PACKAGE(PythonInterp REQUIRED)
-
     ##__________________________________________________________________________
     ## Check for the header files
 
