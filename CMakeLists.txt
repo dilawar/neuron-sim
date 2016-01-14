@@ -78,6 +78,10 @@ add_subdirectory( ${EXTERNAL_SRC_DIR} )
 SET(NRNPYTHON_DIR ${CMAKE_CURRENT_SOURCE_DIR}/nrn/src/nrnpython)
 add_library(hoc MODULE ${NRNPYTHON_DIR}/inithoc.cpp)
 
+configure_file( ${NRNPYTHON_DIR}/setup_cmake.py.in
+    ${NRNPYTHON_DIR}/setup_cmake.py
+    )
+
 set_target_properties(hoc
     PROPERTIES PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron
@@ -107,7 +111,6 @@ set_target_properties(surfaces
     PROPERTIES PREFIX ""
     LIBRARY_OUTPUT_DIRECTORY ${NRNPYTHON_DIR}/neuron/rxd/geometry3d/surfaces
     )
-
 
 target_link_libraries(hoc 
     nrnpython
@@ -142,13 +145,13 @@ install(DIRECTORY ${IV_INSTALL_DIR}/
     USE_SOURCE_PERMISSIONS
     )
 
-#install(CODE
-#    "
-#    EXECUTE_PROCESS(
-#        COMMAND
-#        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
-#        WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
-#        )"
-#    COMPONENT neuron
-#    )
-#
+install(CODE
+    "
+    EXECUTE_PROCESS(
+        COMMAND
+        ${PYTHON_EXECUTABLE}${PYTHON_VERSION_MAJOR} setup.py install --prefix ${CMAKE_INSTALL_PREFIX}
+        WORKING_DIRECTORY ${NRN_SOURCE_DIR}/src/nrnpython
+    )"
+    COMPONENT neuron
+    )
+
